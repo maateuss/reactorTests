@@ -4,7 +4,7 @@ public class Product {
     private Integer id;
 
     public Product(Integer id) {
-        this.id = id;Ma
+        this.id = id;
     }
 
     @Override
