@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.model.Product;
 import org.example.notifications.CartNotification;
 import org.example.notifications.SaleNotification;
 import org.example.service.SaleService;
@@ -14,6 +15,7 @@ public class Main {
     public static void main(String[] args) {
 
         SaleNotification saleNotification = new SaleNotification();
+        CartNotification cartNotification = new CartNotification();
         SaleService saleService = new SaleService();
 
         saleNotification.getVendaFlux().delayElements(Duration.ofSeconds(5)).subscribe(sale -> {
@@ -21,6 +23,9 @@ public class Main {
             System.out.println(sale.getClientName() + " realizou uma compra");
         });
 
+        cartNotification.getCartFlux().subscribe(item -> {
+            System.out.println(item.toString());
+        });
 
         try(Scanner scanner = new Scanner(System.in)) {
             System.out.println("Digite seu nome");
@@ -34,6 +39,7 @@ public class Main {
                 Integer escolha = scanner.nextInt();
                 if(escolha != 4){
                     productsId.add(escolha);
+                    cartNotification.addToCart(new Product(escolha));
                 }
                 saveProduct = escolha;
             }
